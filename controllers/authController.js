@@ -24,6 +24,7 @@ const login = async (req, res) => {
 
 const updateUser = async (req, res) => {
   res.send("updateUser");
+  User.save()
 };
 
 export { register, login, updateUser };
