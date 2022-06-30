@@ -1,3 +1,4 @@
+// import cors from "cors";
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
@@ -17,17 +18,23 @@ import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 
 // introduce middleware and create global actions
+// app.use(cors());
 app.use(express.json());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", jobsRouter);
+
+app.get("/", (req, res) => {
+  res.json({ msg: "welcome!" });
+});
+
+app.get("/api/v1", (req, res) => {
+  res.json({ msg: "api" });
+});
+
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-app.get("/", (req, res) => {
-  // throw new Error('error')
-  res.send("welcome!");
-});
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 const start = async () => {
   try {
