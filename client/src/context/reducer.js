@@ -59,7 +59,7 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-
+// toggle sidebar on sandwich button
   if (action.type === TOGGLE_SIDEBAR) {
     return { ...state, showSidebar: !state.showSidebar };
   }
