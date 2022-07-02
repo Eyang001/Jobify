@@ -31,6 +31,40 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // axios global setup - it will send with all http requests
+  // axios.defaults.headers.common["Authorization"] = `Bearer ${state.token}`;
+
+  // axios - instance setup
+  const authFetch = axios.create({
+    baseURL: "/api/v1",
+  });
+
+  // axios - interceptors (request)
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common["Authorization"] = `Bearer ${state.token}`;
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // axios - interceptors (response)
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      console.log(error.response);
+      if ((error.response.status = 401)) {
+        console.log("AUTH ERROR");
+      }
+      return Promise.reject(error);
+    }
+  );
+
   //display danger alert for missing values
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -86,12 +120,23 @@ const AppProvider = ({ children }) => {
   };
 
   const updateUser = async (currentUser) => {
-    console.log(currentUser);
+    try {
+      const { data } = await authFetch.patch("/auth/updateUser", currentUser);
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   return (
     <AppContext.Provider
-      value={{ ...state, displayAlert, setupUser, toggleSidebar, logoutUser, updateUser }}
+      value={{
+        ...state,
+        displayAlert,
+        setupUser,
+        toggleSidebar,
+        logoutUser,
+        updateUser,
+      }}
     >
       {children}
     </AppContext.Provider>
