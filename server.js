@@ -24,6 +24,11 @@ import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import authenticateUser from "./middleware/auth.js";
 
+// security middleware
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+
 // introduce middleware and create global actions
 // app.use(cors());
 if (process.env.NODE_ENV !== "production") {
@@ -33,6 +38,11 @@ if (process.env.NODE_ENV !== "production") {
 const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(express.json());
+
+// add security middleware
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
 //routes
 app.use("/api/v1/auth", authRouter);
