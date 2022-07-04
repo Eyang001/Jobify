@@ -1,6 +1,6 @@
 # Jobify
 
-####Checkout the app here!
+#### Checkout the app here!
 ```https://my-proj-manager.herokuapp.com/```
 
 #### Track Your Job Search
