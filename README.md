@@ -1,15 +1,8 @@
 # Jobify
 
-#### Checkout the app here!
-```https://my-proj-manager.herokuapp.com/```
-
 #### Track Your Job Search
 
-Project in Action - [Jobify](https://www.jobify.live/)
-
-#### Support
-
-Find the App Useful? [You can always buy me a coffee](https://www.buymeacoffee.com/johnsmilga)
+Project in Action - [Jobify](https://my-proj-manager.herokuapp.com/)
 
 #### Run The App Locally
 
